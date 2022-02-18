@@ -1,8 +1,18 @@
+'''
+샘플 데이터 다운로드
+https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/12.%20Sequence%20Labeling/dataset/train.txt
+
+import urllib.request
+
+urllib.request.urlretrieve(
+  "https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/12.%20Sequence%20Labeling/dataset/train.txt", 
+  filename="train.txt"
+)
+'''
 import re
 
 import numpy as np
 import matplotlib.pyplot as plt
-import urllib.request
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.utils import to_categorical
@@ -39,7 +49,7 @@ def split_tagged_sentence(tagged_sentences):
   return sentences, ner_tags
 
 sentences, ner_tags = split_tagged_sentence(
-  load('train.txt')
+  load('train_data_lstm')
 )
 print(sentences[0])
 print(ner_tags[0])

@@ -1,3 +1,7 @@
+'''
+샘플 데이터 다운로드
+wget https://github.com/naver/nlp-challenge/raw/master/missions/ner/data/train/train_data
+'''
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 from transformers import *
@@ -13,7 +17,7 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-cased')
 # print(tokenizer.tokenize("대한민국 만세."))
 
 def get_data() :
-  train = pd.read_csv("train_data", names=['src', 'tar'], sep="\t")
+  train = pd.read_csv("train_data_bert", names=['src', 'tar'], sep="\t")
   train = train.reset_index()
 
   train['src'] = train['src'].str.replace("．", ".", regex=False)
@@ -122,11 +126,6 @@ def create_model():
       metrics=['sparse_categorical_accuracy'])
   nr_model.summary()
 
-  try :
-    model.save('bert-ner.h5')
-    print('모덜 저장 완료')
-  except:
-    pass
 
   return nr_model
 
@@ -169,7 +168,14 @@ tr_masks, val_masks, _, _ = train_test_split(attention_masks, input_ids, random_
 
 # # 모델 만들기
 nr_model = create_model()
+print('before fit')
 nr_model.fit([tr_inputs, tr_masks], tr_tags, validation_data=([val_inputs, val_masks], val_tags), epochs=3, shuffle=False, batch_size=bs)
+
+try :
+  nr_model.save('bert-ner.h5')
+  print('모덜 저장 완료')
+except:
+  pass
 
 # # 실제 데이터 테스트
 ner_inference("문재인 대통령은 1953년 1월 24일 경상남도 거제시에서 아버지 문용형과 어머니 강한옥 사이에서 둘째(장남)로 태어났다.", nr_model, index_to_ner)
