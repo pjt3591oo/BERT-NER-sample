@@ -6,7 +6,7 @@ import urllib.request
 
 urllib.request.urlretrieve(
   "https://raw.githubusercontent.com/ukairia777/tensorflow-nlp-tutorial/main/12.%20Sequence%20Labeling/dataset/train.txt", 
-  filename="train.txt"
+  filename="./data/train_data_lstm.data"
 )
 '''
 import re
@@ -49,7 +49,7 @@ def split_tagged_sentence(tagged_sentences):
   return sentences, ner_tags
 
 sentences, ner_tags = split_tagged_sentence(
-  load('train_data_lstm')
+  load('./data/train_data_lstm.data')
 )
 print(sentences[0])
 print(ner_tags[0])
