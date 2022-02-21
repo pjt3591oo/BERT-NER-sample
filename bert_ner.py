@@ -17,7 +17,7 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-cased')
 # print(tokenizer.tokenize("대한민국 만세."))
 
 def get_data() :
-  train = pd.read_csv("train_data_bert.data", names=['src', 'tar'], sep="\t")
+  train = pd.read_csv("./data/train_data_bert.data", names=['src', 'tar'], sep="\t")
   train = train.reset_index()
 
   train['src'] = train['src'].str.replace("．", ".", regex=False)
