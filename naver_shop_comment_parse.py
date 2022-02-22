@@ -1,5 +1,9 @@
 import json
+# from konlpy.tag import Mecab
+from konlpy.tag import Kkma
 from bs4 import BeautifulSoup
+
+kkma = Kkma()
 
 def parse(content, topics):
   soup = BeautifulSoup(content.replace('<br/>', ''), 'html.parser')
@@ -10,7 +14,8 @@ def parse(content, topics):
 
   for topic, text in zip(topics, rs):
     temp = []
-    for idx, word in enumerate(text.text.split(' ')):
+    # for idx, word in enumerate(text.text.split(' ')):
+    for idx, word in enumerate(kkma.nouns(text.text)):
       temp.append((word, '%s-%s'%(idx == 0 and 'B' or 'I', topic['topicCode'])))
     tag.append(temp)
     text.replaceWith(' $$$$$$$$$$$$$_%d '%cnt)
