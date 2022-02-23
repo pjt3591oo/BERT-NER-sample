@@ -6,3 +6,7 @@ loader.py
 loader_test.py
 
 naver_shop_comments.h5
+index_ner.json
+ner_index.json
+index_word.json
+word_index.json
