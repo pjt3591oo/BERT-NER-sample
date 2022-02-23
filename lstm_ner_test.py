@@ -32,7 +32,6 @@ def preprocess(reviews):
   return sentences, tags
 
 sentences, ner_tags = preprocess(load_data())
-
 print(sentences[0])
 print(ner_tags[0])
 
@@ -49,8 +48,8 @@ y_train = tar_tokenizer.texts_to_sequences(ner_tags)
 print(X_train[0])
 print(y_train[0])
 
-index_to_word = src_tokenizer.index_word
-index_to_ner = tar_tokenizer.index_word
+index_to_word = src_tokenizer.index_word # {인덱스: 단어,    인덱스: 단어   } /\ word_index {단어   : 인덱스, 단어   : 인덱스} 
+index_to_ner = tar_tokenizer.index_word  # {인덱스: NER태그, 인덱스: NER태그} /\ word_index {NER태그: 인덱스, NER태그: 인덱스}      
 
 decoded = []
 for index in X_train[0] : # 첫번째 샘플 안의 각 정수로 변환된 단어에 대해서
@@ -90,7 +89,6 @@ i = 0 # 확인하고 싶은 테스트용 샘플의 인덱스.
 
 # 입력한 테스트용 샘플에 대해서 예측 y를 리턴
 y_predicted = model.predict(np.array([X_test[i]]))
-
 # 확률 벡터를 정수 레이블로 변경.
 y_predicted = np.argmax(y_predicted, axis=-1)
 
@@ -101,5 +99,5 @@ print("{:20}|{:30}|{}".format("단어", "실제값", "예측값"))
 print(70 * "-")
 
 for word, tag, pred in zip(X_test[i], labels, y_predicted[0]):
-    if word != 0: # PAD값은 제외함.
-        print("{:20}: {:30} {}".format(index_to_word[word], index_to_ner[tag].upper(), index_to_ner[pred].upper()))
+  if word != 0: # PAD값은 제외함.
+    print("{:20}: {:30} {}".format(index_to_word[word], index_to_ner[tag].upper(), index_to_ner[pred].upper()))

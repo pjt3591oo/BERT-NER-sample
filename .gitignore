@@ -1,3 +1,8 @@
 data/*.data
 data/*.json
 __pycache__
+
+loader.py
+loader_test.py
+
+naver_shop_comments.h5
