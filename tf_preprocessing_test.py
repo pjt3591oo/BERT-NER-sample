@@ -1,4 +1,5 @@
-from tensorflow.keras.preprocessing.text import Tokenizer
+import json
+from tensorflow.keras.preprocessing.text import Tokenizer, tokenizer_from_json
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.utils import to_categorical
 
@@ -11,6 +12,16 @@ tokenizer = Tokenizer(num_words=4000)
 tokenizer.fit_on_texts(data)
 
 texts_to_sequences = tokenizer.texts_to_sequences(data)
+
+# 모델저장
+tokenizer_json = tokenizer.to_json()
+with open('tokenizer.json', 'w', encoding='utf-8') as f:
+    f.write(json.dumps(tokenizer_json, ensure_ascii=False))
+
+# 모델불러오기
+with open('tokenizer.json') as f:
+    data = json.load(f)
+    tokenizer = tokenizer_from_json(data)
 
 print(tokenizer.index_word)
 '''
