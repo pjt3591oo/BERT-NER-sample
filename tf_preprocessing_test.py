@@ -2,16 +2,26 @@ import json
 from tensorflow.keras.preprocessing.text import Tokenizer, tokenizer_from_json
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.utils import to_categorical
-
+from pprint import pprint
 data = [
   "I am working on an NLP problem.".split(' '),
   "I have downloaded premade embedding weights to use for an embedding layer.".split(' '),
-  " I want to tokenize it using the same indices as my premade embedding layer.".split(' '),
+  "I want to tokenize it using the same indices as my premade embedding layer.".split(' '),
 ]
+
 tokenizer = Tokenizer(num_words=4000)
 tokenizer.fit_on_texts(data)
 
-texts_to_sequences = tokenizer.texts_to_sequences(data)
+print()
+pprint(tokenizer.index_word)
+pprint(tokenizer.word_index)
+print()
+print()
+texts_to_sequences = tokenizer.texts_to_sequences([
+  ["i", "have", "nlp", "problem."]
+])
+
+print(texts_to_sequences)
 
 # 모델저장
 tokenizer_json = tokenizer.to_json()
@@ -58,6 +68,7 @@ print(texts_to_sequences)
 ]
 '''
 
+
 # maxlen만큼 빈 공간은 0으로 채운다
 pad = pad_sequences(texts_to_sequences, padding='post', maxlen=70)
 print(pad)
@@ -79,6 +90,10 @@ print(pad)
 tag_size = len(tokenizer.word_index) + 1
 category = to_categorical(pad, num_classes=tag_size)
 print(category)
+print(category.shape)
+for i in category[0]:
+  print(i)
+# print(category[0])
 
 '''
 [[[0. 1. 0. ... 0. 0. 0.]
